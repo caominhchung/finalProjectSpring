@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Class Add
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/css/class_management_ui/font-and-icon.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/class_management_ui/style.css}" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/class_management_ui/choosen.css}">
+
+    <style>
+        label.error {
+            color: red !important;
+        }
+    </style>
+</head>
+
+<body class="">
+    <div class="wrapper ">
+        <div th:replace="/fragments :: slide_bar"> </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <div th:replace="fragments :: navbar('Add Class')"></div>
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <form th:action="@{/admin/add-class}" method="post" id="form-add-class" th:object="${class}">
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Name</label>
+                                                    <input th:field="*{name}" type="text" class="form-control">
+                                                </div>
+                                                <label class="error" th:text="${error}"></label>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Plan count</label>
+                                                    <input th:field="*{planCount}" type="number"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Start date</label>
+                                                    <input th:field="*{startDate}" type="date"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">End date</label>
+                                                    <input th:field="*{endDate}" type="date" class="form-control">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Type</label>
+                                                    <select class="custom-select" th:field="*{type}">
+                                                        <option value="Fresher">Fresher</option>
+                                                        <option value="Internship">Internship</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Trainer</label>
+                                                    <select class="custom-select" th:field="*{trainer}" >
+                                                        <option value="">None</option>
+                                                        <span th:each="trainer : ${trainers}">
+                                                            <option th:value="${trainer.id}" th:text="${trainer.name}"></option>
+                                                        </span>
+
+                
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Status</label>
+                                                    <select class="custom-select" th:field="*{statusOfClass}">
+                                                        <option value="Waiting">Waiting</option>
+                                                        <option value="Running">Run</option>
+                                                        <option value="Done">Done</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Course</label>
+                                                    <select data-placeholder="Choose a Course..." th:field="*{classCourses}" class="chosen-select custom-select" multiple tabindex="4" >
+                                                        <span th:each="course : ${courses}">
+                                                            <option th:value="${course.id}" th:text="${course.name}"></option>
+                                                        </span>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group is-focused">
+                                                    <label class="bmd-label-floating">Note</label>
+                                                    <textarea th:field="*{note}" type="text" class="form-control"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary pull-right">Add Class</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+
+            </footer>
+        </div>
+    </div>
+
+    <script th:src="@{/js/dashboard_js/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function () {
+          
+            $.validator.addMethod("InvalidEndDate", function (value, element) {
+                var startDate = new Date($('#startDate').val());
+                var inputDate = new Date(value);
+                if (inputDate > startDate)
+                    return true;
+                return false;
+            }, "Invalid end date");
+
+            $("#form-add-class").validate({
+                rules: {
+                    name: "required",
+                    planCount: "required",
+                    startDate:{
+                        required:true,
+                       
+                    },
+                    endDate: {
+                        required: true,
+                        InvalidEndDate: true
+                    },
+
+                },
+                messages: {
+                  
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        })
+
+
+
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".chosen-select").chosen();
+        });
+    </script>
+    <script>
+
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Class_nav").addClass('active');
+    </script>
+
+
+</body>
+
+</html>

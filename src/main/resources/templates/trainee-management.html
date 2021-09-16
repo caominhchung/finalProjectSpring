@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        Trainee Management
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet"/>
+    <style>
+        button.btn-issue,
+        a.btn-issue {
+            border: 2px solid #2596be;
+            color: #2596be;
+            cursor: pointer;
+
+            background-color: #fff;
+            border-radius: 3px;
+            padding: 2px;
+        }
+
+        button.btn-custom,
+        a.btn-custom {
+            margin-bottom: 10px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body class="">
+<div class="wrapper ">
+    <div th:insert="~{fragments :: slide_bar}"></div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <div th:replace="fragments :: navbar('Trainee Management')">
+        </div>
+        <!-- End Navbar -->
+        <div class="content">
+            <!--      <div class="font-weight-bold h3">-->
+            <!--        <span>Trainees in SRUM</span>-->
+            <!--      </div>-->
+            <div class="container-fluid">
+                <div class="btn-acction">
+                    <form th:action="@{/admin/import/trainee}" method="post" enctype="multipart/form-data">
+                        <input type="file" class="btn-issue btn-custom" th:name="file">
+                        <button class="btn-issue btn-custom">Import Trainees</button>
+                    </form>
+                    <a type="button" th:href="@{/admin/trainee/export/excel}" class="btn-issue btn-custom"><span style="color:#2596be; ">Export Trainee</span>
+                    </a>
+                    <a type="button" th:href="@{/admin/add-trainee}" class="btn-issue btn-custom"><span style="color:#2596be; ">Add Trainee</span></a>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-md-12">
+                        <div style="float: left;">
+                            <button class="btn-issue"><i class="fa fa fa-bars" style="padding-right: 5px;"></i>Filter
+                            </button>
+                        </div>
+                        <div style="float: right;">
+                            <span>page</span>
+                            <input type="text" name="" id=""
+                                   style="border: none; color: #333333; padding: 5px 5px; margin-bottom: 2px;"
+                                   value="10">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6" th:each="trainee : ${traineeList}">
+                        <div class="card card-body">
+                            <div class="media">
+                                <div class="mr-3">
+                                    <a href="#">
+                                        <img src="http://placehold.it/150x150" class="rounded-circle" alt="">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <!--                  <a th:href="@{|/admin/trainee/${trainee.account}|}">-->
+                                    <div class="font-weight-bold h4">
+                                        <i class="fa fa-user"> <a th:href="@{|/admin/trainee/${trainee.id}|}"
+                                                                  th:text="${trainee.name}"></a></i>
+                                    </div>
+                                    <div class="font-weight-semibold">
+                                        <i class="fa fa-info-circle" aria-hidden="true"> Account: <span
+                                                th:text="${trainee.account}"></span></i>
+                                        </br>
+                                        <i class="fa fa-info-circle" aria-hidden="true"> Class: <span
+                                                th:text="${trainee.classOfTrainee.name}"></span></i>
+                                        </br>
+                                        <i class="fa fa-graduation-cap" aria-hidden="true"> Rank: </i>
+                                        </br>
+                                        <i class="fa fa-envelope" aria-hidden="true"> Email: <span
+                                                th:text=" ${trainee.email}"></span></i>
+                                        </br>
+                                        <i class="fa fa-university" aria-hidden="true"> University: <span
+                                                th:text="${trainee.university}"></span></i>
+                                    </div>
+                                    <!--                  </a>-->
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <span class="badge badge-mark bg-success border-success"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--   Core JS Files   -->
+<script src="./js/core/jquery.min.js"></script>
+<script src="./js/core/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+        crossorigin="anonymous "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+        crossorigin="anonymous "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+        crossorigin="anonymous "></script>
+
+<script>
+    $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+    $("#Trainee_nav").addClass('active');
+</script>
+</body>
+
+</html>

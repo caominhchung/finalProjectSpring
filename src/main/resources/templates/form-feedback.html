@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed back</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href="@{/css/feed-back.css}" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="fragments :: slide_bar">
+    </div>
+    <div class="main-panel">
+        <div th:replace="fragments :: navbar('Feed Back')"></div>
+        <div class="container">
+            <div class="header">
+                <h2>TRAINING COURSE FEEDBACK FORM</h2>
+                <p>Please indicate your level of agreement with the statements listed in Mark column of the tables below</p>
+                <p>(Vui lòng cho biết mức độ tán thành của bạn với những ý kiến bên dưới)</p>
+                <p>In which: (Trong đó)</p>
+                <p>5. Strongly agree: Rất đồng ý</p>
+                <p>4. Agree: Đồng ý</p>
+                <p>3. Neutral: Không hẳn tán thành nhưng cũng không phản đối</p>
+                <p>2. Disagree: Không đồng ý</p>
+                <p>1. Strongly disagree: Rất không đồng ý</p>
+            </div>
+            <div class="content">
+                <form th:action="@{/user/feed-back}" method="post">
+                    <p>Xin chào <span th:text= "${trainee.account}"></span> , khi bạn gửi biểu mẫu này, chủ sở hữu sẽ có thể thấy được tên và địa chỉ email của bạn.</p>
+                    <p><span class="important">*</span> Bắt buộc</p>
+                    <div class="form-group">
+                        <p class="index">1. Classcode</p>
+                        <p>(ví dụ: HN21_FR_JAVA_02) <span class="important">*</span></p>
+                        <input th:field="${trainee.classOfTrainee.name}"  class="form-control" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <p class="index">2. Account của bạn là gì? <span class="important">*</span></p>
+                        <input class="form-control" th:field="${trainee.account}" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <p class="index">3. Trainer name</p>
+                        <p>(Account giảng viên chính của môn học) <span class="important">*</span></p>
+                        <input class="form-control" th:field="${trainee.classOfTrainee.trainer.account}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <p class="index">4. Topic</p>
+                        <p>(Tên môn học mà bạn làm Feedback: SQL/JAVA/FEE, ...) <span class="important">*</span></p>
+                        <select class="form-control" name="courseId">
+                            <option value="0">Chọn khóa học</option>
+                            <option th:each="course : ${courseList}" th:value="*{course.id}" th:text="*{course.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <p class="index">5. What did you like most about this topic/course?</p>
+                        <p>(Những điểm bạn thích nhất ở môn học/khóa học này?) <span class="important">*</span></p>
+                        <input class="form-control" name="ques1" type="text" required placeholder="Nhập câu trả lời của bạn">
+                    </div>
+                    <div class="form-group">
+                        <p class="index">6. What aspects of the topic/course could be improved?</p>
+                        <p>(Những điểm có thể cải tiến ở môn học/khóa học này?) <span class="important">*</span></p>
+                        <input class="form-control" name="ques2" type="text" required placeholder="Nhập câu trả lời của bạn">
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">7. I am satisfied with the topic/course's content?</p>
+                        <p>(Tôi hài lòng với nội dung môn học/khóa học) <span class="important">*</span></p>
+                        1<input type="radio" name="ques3" value="1" >
+                        2<input type="radio" name="ques3" value="2">
+                        3<input type="radio" name="ques3" value="3">
+                        4<input type="radio" name="ques3" value="4">
+                        5<input type="radio" name="ques3" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">8. The level of the course is appropriate for the trainees?</p>
+                        <p>(Mức độ khó của khóa học/môn học phù hợp với học viên) <span class="important">*</span></p>
+                        1<input type="radio" name="ques4" value="1" >
+                        2<input type="radio" name="ques4" value="2">
+                        3<input type="radio" name="ques4" value="3">
+                        4<input type="radio" name="ques4" value="4">
+                        5<input type="radio" name="ques4" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">9. The course is useful for my work?</p>
+                        <p>(Khóa học có ích cho công việc của tôi) <span class="important">*</span></p>
+                        1<input type="radio" name="ques5" value="1">
+                        2<input type="radio" name="ques5" value="2">
+                        3<input type="radio" name="ques5" value="3">
+                        4<input type="radio" name="ques5" value="4">
+                        5<input type="radio" name="ques5" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">10. The materials distributed were pertinent and helpful?</p>
+                        <p>(Tài liệu học tập phù hợp và bổ ích) <span class="important">*</span></p>
+                        1<input type="radio" name="ques6" value="1">
+                        2<input type="radio" name="ques6" value="2">
+                        3<input type="radio" name="ques6" value="3">
+                        4<input type="radio" name="ques6" value="4">
+                        5<input type="radio" name="ques6" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">11. The training content is fully transferred following the courseware?</p>
+                        <p>(Nội dung đào tạo được truyền đạt đầy đủ theo giáo trình) <span class="important">*</span></p>
+                        1<input type="radio" name="ques7" value="1">
+                        2<input type="radio" name="ques7" value="2">
+                        3<input type="radio" name="ques7" value="3">
+                        4<input type="radio" name="ques7" value="4">
+                        5<input type="radio" name="ques7" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">12. The trainer is knowledgeable in the topic/course training subject area?</p>
+                        <p>(Giảng viên giàu kiến thức trong lĩnh vực đang đào tạo) <span class="important">*</span></p>
+                        1<input type="radio" name="ques8" value="1">
+                        2<input type="radio" name="ques8" value="2">
+                        3<input type="radio" name="ques8" value="3">
+                        4<input type="radio" name="ques8" value="4">
+                        5<input type="radio" name="ques8" value="5" checked>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <p class="index">13. The trainer's instructions were clear and understandable?</p>
+                        <p>(Giảng viên hướng dẫn rõ ràng và dễ hiểu) <span class="important">*</span></p>
+                        1<input type="radio" name="ques9" value="1">
+                        2<input type="radio" name="ques9" value="2">
+                        3<input type="radio" name="ques9" value="3">
+                        4<input type="radio" name="ques9" value="4">
+                        5<input type="radio" name="ques9" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">14. My questions were encouraged and answered satisfactorily?</p>
+                        <p>(Tôi được khuyến khích đặt câu hỏi và hài lòng với trả lời của giảng viên) <span class="important">*</span></p>
+                        1<input type="radio" name="ques10" value="1">
+                        2<input type="radio" name="ques10" value="2">
+                        3<input type="radio" name="ques10" value="3">
+                        4<input type="radio" name="ques10" value="4">
+                        5<input type="radio" name="ques10" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">15. How satisfied are you with the lecturer? </p>
+                        <p>(Mức độ hài lòng của bạn đối với giảng viên?) <span class="important">*</span></p>
+                        1<input type="radio" name="ques11" value="1">
+                        2<input type="radio" name="ques11" value="2">
+                        3<input type="radio" name="ques11" value="3">
+                        4<input type="radio" name="ques11" value="4">
+                        5<input type="radio" name="ques11" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">16. Would you like to suggest more wishes about teaching methods to your lecturers? </p>
+                        <p>(Bạn có muốn đề xuất thêm nguyện vọng về phương pháp giảng dạy với giảng viên không?) <span class="important">*</span></p>
+                        <input class="form-control" name="ques12"  placeholder="Nguyện vọng/Đề xuất của bạn ..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">17. The Class Admin was supportive and helpful (providing accurate and timely answers with a friendly attitude and professional manners)?</p>
+                        <p>(Quản lý lớp hỗ trợ hiệu quả và nhiệt tình) <span class="important">*</span></p>
+                        1<input type="radio" name="ques13" value="1">
+                        2<input type="radio" name="ques13" value="2">
+                        3<input type="radio" name="ques13" value="3">
+                        4<input type="radio" name="ques13" value="4">
+                        5<input type="radio" name="ques13" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">18. How satisfied are you with class management? </p>
+                        <p>(Mức độ hài lòng của bạn đối với quản lý lớp?) <span class="important">*</span></p>
+                        1<input type="radio" name="ques14" value="1">
+                        2<input type="radio" name="ques14" value="2">
+                        3<input type="radio" name="ques14" value="3">
+                        4<input type="radio" name="ques14" value="4">
+                        5<input type="radio" name="ques14" value="5" checked>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="index">19. Would you like to suggest more wishes about the admin's management method? </p>
+                        <p>(Bạn có muốn đề xuất thêm nguyện vọng về phương pháp quản lý của admin không?) <span class="important">*</span></p>
+                        <input class="form-control" name="ques15" placeholder="Nguyện vọng/Đề xuất của bạn ..." required>
+                    </div>
+
+<!--                    <div class="form-group">-->
+<!--                        <p class="index">15. The logictics was well-prepared?</p>-->
+<!--                        <p>(Cơ sở vật chất, điều kiện học tập được chuẩn bị chu đáo) <span class="important">*</span></p>-->
+<!--                        1<input type="radio" name="choose-8" value="1">-->
+<!--                        2<input type="radio" name="choose-8" value="2">-->
+<!--                        3<input type="radio" name="choose-8" value="3">-->
+<!--                        4<input type="radio" name="choose-8" value="4">-->
+<!--                        5<input type="radio" name="choose-8" value="5" checked>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group">-->
+<!--                        <p class="index">16. The course information was communicated clearly to the trainees before the course start, including Training calendar (time, venue), Course disciplines, Training commitments, etc.</p>-->
+<!--                        <p>(Thông tin khóa học được thông báo rõ ràng đến học viên trước khi khai giảng, gồm thời khóa biểu, nội quy, cam kết đào tạo ...) <span class="important">*</span></p>-->
+<!--                        1<input type="radio" name="choose-underInfo" value="1">-->
+<!--                        2<input type="radio" name="choose-underInfo" value="2">-->
+<!--                        3<input type="radio" name="choose-underInfo" value="3">-->
+<!--                        4<input type="radio" name="choose-underInfo" value="4">-->
+<!--                        5<input type="radio" name="choose-underInfo" value="5" checked>-->
+<!--                    </div>-->
+
+
+
+
+
+
+
+
+<!--                    <div class="form-group">-->
+<!--                        <p class="index">20. Bạn có sẵn lòng giới thiệu khóa học này đến bạn bè hoặc đồng nghiệp của mình không?  <span class="important">*</span></p>-->
+<!--                        1<input type="radio" name="choose-share" value="1">-->
+<!--                        2<input type="radio" name="choose-share" value="2">-->
+<!--                        3<input type="radio" name="choose-share" value="3">-->
+<!--                        4<input type="radio" name="choose-share" value="4">-->
+<!--                        5<input type="radio" name="choose-share" value="5">-->
+<!--                        6<input type="radio" name="choose-share" value="6">-->
+<!--                        7<input type="radio" name="choose-share" value="7">-->
+<!--                        8<input type="radio" name="choose-share" value="8">-->
+<!--                        9<input type="radio" name="choose-share" value="9" checked>-->
+<!--                        10<input type="radio" name="choose-share" value="10">-->
+<!--                    </div>-->
+
+                    <div class="form-group">
+                        <input type="submit" value="Gửi" class="btn">
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+        <div th:replace="fragments :: footer"></div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+<script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+<script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+
+
+<script>
+
+    $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+    $("#Feedback_nav").addClass('active');
+</script>
+</body>
+</html>

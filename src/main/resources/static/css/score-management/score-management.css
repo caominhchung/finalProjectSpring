@@ -1,0 +1,55 @@
+.content {
+    background: #ffffff;
+    border: 2px solid black;
+}
+
+#traineeInfo {
+    background-color: rgb(255, 253, 149);
+}
+
+#v-pills-tab .active {
+    background-color: yellowgreen;
+}
+
+.score-detail {
+    display: flex;
+}
+
+.score-type {
+    margin-left: 20px;
+}
+
+.summary-score label {
+    color: red;
+}
+
+.comment-content{
+    width: 60%;
+}
+
+.btn-edit-comment, .btn-delete-comment,.btn-save-edit-comment,.btn-no-save-edit-comment{
+    padding: 5px;
+}
+
+.detail-comment{
+    background-color: white;
+    border: none;
+    margin-top: 20px;
+    width: 60%;
+}
+
+.graduated{
+    background-color: #2ecd23;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.graduated .card-body .card-title{
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+.graduated .card-body .card-rank{
+    font-weight: bold;
+}
+

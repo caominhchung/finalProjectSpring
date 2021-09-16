@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Dashboard
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet" />
+    <style>
+        .dashboard-custom {
+            display: flex;
+        }
+        .dashboard-custom input {
+            margin-right: 10px;
+        }
+        .icon-dashboard-custom {
+            margin-right: 20px;
+        }
+        .legend {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body class="">
+<div class="wrapper ">
+    <div th:insert="~{fragments :: slide_bar}"></div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <div th:replace="fragments :: navbar('Dashboard')">
+        </div>
+        <!-- End Navbar -->
+        <div class="content">
+
+            <div class="container-fluid">
+                <form id="sub-report">
+                    <div class="justify-content-end dashboard-custom">
+                        <input type="date" id="startDate" name="startDate"  min="2018-01-01" max="2022-12-31">
+                        <input type="date" id="endDate" name="endDate" min="2018-01-01" max="2022-12-31">
+                        <button  class="btn-danger" style="border-radius: 3px" id="click-rp">Show Report</button>
+                    </div>
+                </form>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card ">
+
+                            <div class="card-header" >
+                                <h5 class="card-title" style="">Class Fresher</h5>
+
+                            </div>
+
+                            <div class="card-body ">
+                                <div class="legend" style="display: flex; justify-content: center; justify-items: center;">
+                                    <div class="icon-dashboard-custom"><i class="fa fa-circle " style="color: orange;"></i><span >Waiting</span> </div>
+                                    <div class="icon-dashboard-custom"><i class="fa fa-circle  " style="color: red;"></i> <span >Running</span></div>
+                                    <div class="icon-dashboard-custom"><i class="fa fa-circle"  style="color: green; "></i> <span> Done</span></div>
+                                </div>
+                                <br>
+                                <div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                        <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                        <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                                    </div>
+                                </div>
+                                <div id="chart-fresher">
+                                <canvas id="chartClass" width="293" height="146" style="display: block; width: 293px; height: 146px;" class="chartjs-render-monitor"></canvas>
+                                </div>
+                            </div>
+                            <div class="card-footer ">
+                                <div class="legend">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" class="text-blue"><strong>Total</strong></th>
+                                            <th scope="col" class="" style="color: orange;"><strong>Waiting</strong></th>
+                                            <th scope="col" class="" style="color: red;"><strong>Running</strong></th>
+                                            <th scope="col" class="" style="color: green;"><strong>Done</strong></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-blue" id="total-report-fr"><strong></strong></td>
+                                            <td class="" id="wait-report-fr" style="color: orange;"><strong></strong></td>
+                                            <td class="" id="run-report-fr" style="color: red;"><strong></strong></td>
+                                            <td class="" id="done-report-fr" style="color: green;"><strong></strong></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card ">
+
+                            <div class="card-header" >
+                                <h5 class="card-title" style="">Class Internship</h5>
+                            </div>
+
+                            <div class="card-body ">
+                                <div class="legend" style="display: flex; justify-content: center; justify-items: center;">
+                                    <div class="icon-dashboard-custom"><i class="fa fa-circle " style="color: orange;"></i><span >Waiting</span> </div>
+                                    <div class="icon-dashboard-custom"><i class="fa fa-circle  " style="color: red;"></i> <span >Running</span></div>
+                                    <div class="icon-dashboard-custom"><i class="fa fa-circle"  style="color: green; "></i> <span> Done</span></div>
+                                </div>
+                                </div>
+
+                                <div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                                    <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                        <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                                    </div>
+                                    <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                                        <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                                    </div>
+                                </div>
+                            <div id="chart-intern">
+                                <canvas id="chartPerson" width="293" height="146" style="display: block; width: 293px; height: 146px;" class="chartjs-render-monitor"></canvas>
+                            </div>
+                            <div class="card-footer ">
+                                <div class="legend">
+                                    <table class="table table-borderless">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" class="text-blue"><strong>Total</strong></th>
+                                            <th scope="col" class="" style="color: orange;"><strong>Waiting</strong></th>
+                                            <th scope="col" class="" style="color: red;"><strong>Running</strong></th>
+                                            <th scope="col" class="" style="color: green;"><strong>Done</strong></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-blue" id="total-report-in" ><strong></strong></td>
+                                            <td class="text-warning" id="wait-report-in" style="color: orange;"><strong></strong></td>
+                                            <td class="text-danger" id="run-report-in" style="color: red;"><strong></strong></td>
+                                            <td class="text-blue" id="done-report-in" style="color: green;"><strong></strong></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        <footer class="footer">
+
+        </footer>
+    </div>
+</div>
+
+
+<!--   Core JS Files   -->
+<script th:src="@{/js/dashboard_js/jquery.min.js}"></script>
+<script th:src="@{/js/dashboard_js/popper.min.js}"></script>
+<script th:src="@{/js/dashboard_js/chartjs.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+<-- Always remember to call the above files first before calling the bootstrap.min.js file -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+<script th:inline="javascript">
+     let listClassFresher = [[${listFresher}]];
+     let listClassInternship = [[${listInternship}]];
+
+     showChart(listClassFresher, listClassInternship)
+     $(document).ready(function (){
+         $.validator.addMethod("validDate", function (value, element) {
+             var startDate = $('#startDate').val();
+             var endDate;
+             if(startDate == '') {
+                 startDate = new Date();
+             } else {
+                 startDate = new Date(startDate);
+             }
+             if(value == '') {
+                 endDate = new Date();
+             } else {
+                 endDate = new Date(value);
+             }
+
+             if (endDate > startDate)
+                 return true;
+             return false;
+         }, "Invalid date");
+
+
+         $("#sub-report").validate({
+             rules: {
+                 endDate: {
+                     validDate: true,
+                 }
+
+             },
+             submitHandler: function (form) {
+                 console.log("abcd")
+                 let startDate = $('#startDate').val();
+                 let endDate = $('#endDate').val();
+                 if(startDate == '') {
+                     startDate = new Date().toISOString().slice(0, 10);
+                 }
+                 if(endDate == '') {
+                     endDate = new Date().toISOString().slice(0, 10);
+                 }
+                console.log(startDate, endDate)
+                 $.ajax({
+                     url: "/api/class/dashboard",
+                     type: 'POST',
+                     data: {
+                         startDate,
+                         endDate
+                     },
+                     success: function (result) {
+                         listClassFresher = result["1"];
+                         listClassInternship = result["2"];
+                         $('#chart-fresher').html(' <canvas id="chartClass" width="293" height="146" style="display: block; width: 293px; height: 146px;" class="chartjs-render-monitor"></canvas>');
+                         $('#chart-intern').html('<canvas id="chartPerson" width="293" height="146" style="display: block; width: 293px; height: 146px;" class="chartjs-render-monitor"></canvas>')
+
+                         showChart(listClassFresher, listClassInternship);
+                     },
+                 });
+             }
+         });
+     })
+
+     function showChart(listClassFresher, listClassInternship) {
+
+         let doneFresher = 0;
+         let waitFresher = 0;
+         let runFresher = 0;
+         let doneInternship = 0;
+         let waitInternship = 0;
+         let runInternship = 0;
+         listClassFresher.forEach(x => {
+             if(x.type == 'Done') {
+                 doneFresher = x.count;
+             } else if(x.type == 'Waiting'){
+                 waitFresher = x.count;
+             } else {
+                 runFresher = x.count;
+             }
+
+             //console.log(x);
+         })
+         $('#total-report-fr').text(doneFresher + waitFresher + runFresher);
+         $('#wait-report-fr').text(waitFresher);
+         $('#run-report-fr').text(runFresher);
+         $('#done-report-fr').text(doneFresher);
+
+
+         listClassInternship.forEach(x => {
+             //console.log(x)
+             if(x.type == 'Done') {
+                 doneInternship = x.count;
+             } else if(x.type == 'Waiting'){
+                 waitInternship = x.count;
+             } else {
+                 runInternship = x.count;
+             }
+         })
+
+         $('#total-report-in').text(doneInternship + waitInternship + runInternship);
+         $('#wait-report-in').text(waitInternship);
+         $('#run-report-in').text(runInternship);
+         $('#done-report-in').text(doneInternship);
+         //console.log(doneInternship, waitInternship, runInternship)
+         var ctx = document.getElementById('chartClass').getContext("2d");
+
+         var classChart = new Chart(ctx, {
+             type: 'pie',
+             data: {
+                 labels: [1, 2, 3],
+                 datasets: [{
+                     label: "Class",
+                     pointRadius: 0,
+                     pointHoverRadius: 0,
+                     backgroundColor: [
+                         'orange',
+                         'red',
+                         'green'
+                     ],
+                     borderWidth: 0,
+                     data: [waitFresher, runFresher, doneFresher]
+                 }]
+             },
+
+             options: {
+
+                 legend: {
+                     display: false
+                 },
+
+                 pieceLabel: {
+                     render: 'percentage',
+                     fontColor: ['white'],
+                     precision: 2
+                 },
+
+                 tooltips: {
+                     enabled: false
+                 },
+
+                 scales: {
+                     yAxes: [{
+
+                         ticks: {
+                             display: false
+                         },
+                         gridLines: {
+                             drawBorder: false,
+                             zeroLineColor: "transparent",
+                             color: 'rgba(255,255,255,0.05)'
+                         }
+
+                     }],
+
+                     xAxes: [{
+                         barPercentage: 1.6,
+                         gridLines: {
+                             drawBorder: false,
+                             color: 'rgba(255,255,255,0.1)',
+                             zeroLineColor: "transparent"
+                         },
+                         ticks: {
+                             display: false,
+                         }
+                     }]
+                 },
+             }
+         });
+
+         var ctx_person = document.getElementById('chartPerson').getContext("2d");
+
+         personChart = new Chart(ctx_person, {
+             type: 'pie',
+             data: {
+                 labels: [1, 2, 3],
+                 datasets: [{
+                     label: "Person",
+                     pointRadius: 0,
+                     pointHoverRadius: 0,
+                     backgroundColor: [
+                         'orange',
+                         'red',
+                         'green'
+                     ],
+                     borderWidth: 0,
+                     data: [waitInternship, runInternship, doneInternship]
+                 }]
+             },
+
+             options: {
+
+                 legend: {
+                     display: false
+                 },
+
+                 pieceLabel: {
+                     render: 'percentage',
+                     fontColor: ['white'],
+                     precision: 2
+                 },
+
+                 tooltips: {
+                     enabled: false
+                 },
+
+                 scales: {
+                     yAxes: [{
+
+                         ticks: {
+                             display: false
+                         },
+                         gridLines: {
+                             drawBorder: false,
+                             zeroLineColor: "transparent",
+                             color: 'rgba(255,255,255,0.05)'
+                         }
+
+                     }],
+
+                     xAxes: [{
+                         barPercentage: 1.6,
+                         gridLines: {
+                             drawBorder: false,
+                             color: 'rgba(255,255,255,0.1)',
+                             zeroLineColor: "transparent"
+                         },
+                         ticks: {
+                             display: false,
+                         }
+                     }]
+                 },
+             }
+         });
+     }
+
+</script>
+
+</body>
+
+</html>

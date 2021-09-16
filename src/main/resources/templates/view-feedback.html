@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        View FeedBack
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div th:replace="fragments :: slide_bar">
+
+        </div>
+        <div class="main-panel">
+            <div th:replace="fragments :: navbar('View FeedBack')">
+
+            </div>
+            <div class="content" style="padding: 20px 50px">
+                <p class="h3" style="color: orangered; text-align: center" th:text="${course.name}"></p>
+                <div class="btn-action">
+                    <a class="btn btn-success" style="font-weight: bold; color: whitesmoke">Export To Excel</a>
+                </div>
+                <div class="course-info">
+                    <p>
+                        <b>Duration: </b><span th:text="${course.duration}"></span> days
+                    </p>
+                    <p>
+                        <b>Lecture: </b><span th:text="${course.lecture}"></span>
+                    </p>
+                    <p>
+                        <b>Description: </b><span th:text="${course.description}"></span>
+                    </p>
+                </div>
+                <div class="feed-back-list" th:switch="${feedBackList}">
+                    <h4 th:case="null">No feedback trainee for the Subject!</h4>
+                    <div class="row" th:case="*">
+                        <table class="table table-bordered" style="background-color: whitesmoke">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Trainee</th>
+                                <th>Class</th>
+                                <th>Date</th>
+                                <th>Score</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--        ${#dates.format(feedBack.consultDate, 'dd-MM-yyyy')}-->
+                            <!--<a th:href="${'/blah1/' + {object1.id} + '/blah2/' + {object2.id}}">some link</a>-->
+                            <tr th:each="feedBack, iter : ${feedBackList}">
+                                <td th:text="*{iter.count}"></td>
+                                <td>
+                                    <a th:text="*{feedBack.trainingObjective.trainee.account}"
+
+                                        th:href="@{'/admin/subject/' + ${course.id} + '/feed-back/' + ${feedBack.id}}"
+                                    ></a>
+                                </td>
+                                <td th:text="*{feedBack.trainingObjective.trainee.classOfTrainee.name}"></td>
+                                <td th:text="*{#dates.format(feedBack.consultDate, 'dd-MM-yyyy')}"></td>
+                                <td th:text="*{feedBack.feedBackScore}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+
+
+    <script>
+
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Subject_nav").addClass('active');
+    </script>
+
+
+</body>
+</html>

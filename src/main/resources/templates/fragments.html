@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        Dashboard
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/slidebar_ui/slide-bar.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:fragment="slide_bar">
+    <div class="sidebar" data-color="purple" data-background-color="white" style="background-image: url('/img/bg.jpg')">
+
+        <div class="logo"><a href="#" class="simple-text logo-normal">
+            FRESHER REPORT
+        </a></div>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li class="nav-item " id="Dashboard_nav">
+                    <a class="nav-link" th:href="@{/dashboard}">
+                        <i class="material-icons">dashboard</i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item " id="Class_nav" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')">
+                    <a class="nav-link" th:href="@{/admin/class-management}">
+                        <i class="material-icons">content_paste</i>
+                        <p>Class management</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Trainee_nav" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINEE')">
+                    <a class="nav-link" th:href="@{/admin/trainee-management}">
+                        <i class="material-icons">person</i>
+                        <p>Trainee Management</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Trainer_nav" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_TRAINER')">
+                    <a class="nav-link" th:href="@{/admin/trainer-management}">
+                        <i class="material-icons">person</i>
+                        <p>Trainer Management</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Subject_nav" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" th:href="@{/admin/subject/list}">
+                        <i class="material-icons">book</i>
+                        <p>Subject Management</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Feedback_nav" sec:authorize="hasAnyRole('ROLE_TRAINEE', 'ROLE_TRAINER')">
+                    <a  class="nav-link" th:href="@{/user/feed-back}">
+                        <i class="material-icons">feedback</i>
+                        <p>FeedBack</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Checkin_nav" sec:authorize="hasAnyRole('ROLE_TRAINEE')">
+                    <a  class="nav-link" th:href="@{/admin/trainee-management/checkin}">
+                        <i class="material-icons">event</i>
+                        <p>Checkin</p>
+                    </a>
+                </li>
+                <li class="nav-item " id="Download_nav">
+                    <a class="nav-link" href="#">
+                        <i class="material-icons">library_books</i>
+                        <p>Download Templates</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:fragment="navbar(title)">
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top "
+         style="background-color: #fff !important;">
+        <div class="container-fluid">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand" href="javascript:;"><strong th:text="${title}"></strong> </a>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <li sec:authentication="name"></li>
+
+                    <li class="navbar-brand">
+
+                        <a th:href="@{/logout-account}">
+                            <span class="">Logout</span>
+
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div th:fragments="footer">
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="float-left">
+                <ul>
+
+                    <li>
+                        <a href=>
+                            About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            Licenses
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="copyright float-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>
+                , made with <i class="material-icons">favorite</i> by
+                <a href="https://www.creative-tim.com" target="_blank">Creative </a> for a better web.
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

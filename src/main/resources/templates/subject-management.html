@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Subject Management
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div th:replace="fragments :: slide_bar">
+        </div>
+        <div class="main-panel">
+            <div th:replace="fragments :: navbar('Subject Management')">
+
+            </div>
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="btn-acction">
+                        <a class="btn btn-success" th:href="@{/admin/subject/list/export}">Export File Excel</a>
+                        <a class="btn btn-primary" th:href="@{/admin/subject/add}">Add Subject</a>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div style="float: left;">
+                                <button class="btn-issue" > <i class="fa fa fa-bars"  style="padding-right: 5px;"></i>Filter</button>
+                                <input type="text" placeholder="Search ..." />
+                                <input type="submit" th:value="Search" />
+                            </div>
+                            <div style="float: right;">
+                                <span>page</span>
+                                <input type="text" name="" id=""  style="border: none; color: #333333; padding: 5px 5px; margin-bottom: 2px;" value="10">
+                            </div>
+
+                            <div class="card card-plain">
+
+                                <div class="card-body" style="background-color: #fff !important;">
+
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover">
+                                            <thead class="">
+                                            <th>
+                                                No
+                                            </th>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Duration
+                                            </th>
+                                            <th>
+                                                Lecture
+                                            </th>
+                                            <th>
+                                                Description
+                                            </th>
+                                            <th>
+
+                                            </th>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="course, iter : ${courseList}">
+                                                    <td th:text="*{iter.count}"></td>
+                                                    <td>
+                                                        <a th:text="*{course.name}"
+                                                           th:href="@{/admin/subject/{courseId}/list-training-objective(courseId=${course.getId()})}"></a>
+                                                    </td>
+                                                    <td th:text="*{course.duration}"></td>
+                                                    <td th:text="*{course.lecture}"></td>
+                                                    <td th:text="*{course.description}"></td>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+            <div th:replace="fragments :: footer">
+
+            </div>
+    </div>
+
+    </div>
+
+    <!--   Core JS Files   -->
+    <script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+
+
+    <script>
+
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Subject_nav").addClass('active');
+    </script>
+</body>
+</html>

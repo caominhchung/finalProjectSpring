@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        Class management
+    </title>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        Dashboard
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- CSS Files -->
+    <!--    <link href="../static/css/class_detail_ui/class_detail.css" rel="stylesheet" />-->
+    <link th:href="@{/css/class_detail_ui/class_detail.css}" rel="stylesheet"/>
+    <style>
+        label.error {
+            color: red !important;
+        }
+    </style>
+
+</head>
+
+<body class="">
+<div class="wrapper ">
+    <div th:insert="~{fragments :: slide_bar}"></div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top "
+             style="background-color: #fff !important;">
+            <div class="container-fluid">
+                <!-- <div class="navbar-wrapper">
+<input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31">
+<input type="date" id="stop" name="trip-stop" value="2018-07-22" min="2018-01-01" max="2018-12-31">
+</div>
+<hr> -->
+
+                <div class="collapse navbar-collapse justify-content-end">
+                    <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01"
+                           max="2018-12-31">
+                    <input type="date" id="stop" name="trip-stop" value="2018-07-22" min="2018-01-01" max="2018-12-31">
+                    <button>Show Report</button>
+                </div>
+
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="content" id="contentt">
+
+            <div id="Overview_and_trainer">
+                <div id="Overview">
+                    <div id="Info_of_class">
+                        <div id="Class_name" th:text="${class.name}"></div>
+                        <div id="Plan" class="font-weight-bold font-italic">Plan: <span class="text-info"><span><strong
+                                th:text="${class.planCount}"></strong> </span> student
+                                </span>
+                        </div>
+                        <div id="Actual" class="font-weight-bold font-italic">Actual: <span class="text-info">
+                                    <strong th:text="${class.trainees.size}"></strong> student</span></div>
+                        <div id="Start_date" class="font-weight-bold font-italic">Start: <span class="text-info"
+                                                                                               th:text="${#dates.format(class.startDate, 'dd-MM-yyyy')}"></span>
+                        </div>
+                        <div id="End_date" class="font-weight-bold font-italic">End Date: <span class="text-info"
+                                                                                                th:text="${#dates.format(class.endDate, 'dd-MM-yyyy')}"></span>
+                        </div>
+                        <div id="Group_name" class="font-weight-bold font-italic">Group Name: <span class="text-info"
+                                                                                                    th:text="${class.type}"></span>
+                        </div>
+                    </div>
+
+                    <div id="Info_of_student">
+                        <div id="Total" class="text-primary">
+                            <div id="Total_number" style="font-size:200%;" class="font-weight-bold "
+                                 th:text="${class.trainees.size}"></div>
+                            <div id="Total_label">Total</div>
+                        </div>
+
+                        <div id="Failed" class="text-danger">
+                            <div id="Failed_number" style="font-size:200%;" class="font-weight-bold"
+                                 th:text="${countFailed}">0
+                            </div>
+                            <div id="Failed_label">Failed</div>
+                        </div>
+
+                        <div id="Passed" class="text-info">
+                            <div id="Passed_number" style="font-size:200%;" class="font-weight-bold"
+                                 th:text="${countPassed}">0
+                            </div>
+                            <div id="Passed_label">Passed</div>
+                        </div>
+
+                        <div id="Drop_out" class="text-dark">
+                            <div id="Drop_out_number" style="font-size:200%;" class="font-weight-bold"
+                                 th:text="${countDropout}">0
+                            </div>
+                            <div id="Drop_out_label">Drop out</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="Trainer">
+                    <div id="Avatar">
+
+                        <a href="#">
+                            <img src="http://placehold.it/150x150" class="rounded-circle" alt="">
+                        </a>
+                    </div>
+                    <div id="Name" th:text="${class?.trainer?.name}"></div>
+                    <ul id="Info_trainer" class="nav">
+
+                        <li class="nav-item Trainer_label Info_trainer_active" onclick="showAccount()">Account</li>
+                        <li class="nav-item Trainer_label" onclick="showPhone()">Phone</li>
+                        <li class="nav-item Trainer_label" onclick="showEmail()">Email</li>
+                        <li class="nav-item Trainer_label">Skill</li>
+                    </ul>
+                    <div id="Content_info" th:text="${class?.trainer?.account}"></div>
+                    <div style="display: none" id="Trainer_account" th:text="${class?.trainer?.account}"></div>
+                    <div style="display: none" id="Trainer_phone" th:text="${class?.trainer?.telNumber}"></div>
+                    <div style="display: none" id="Trainer_email" th:text="${class?.trainer?.email}"></div>
+                </div>
+            </div>
+
+            <div class="btn-action" id="btn-action">
+                <button class="btn-issue btn-custom">Import Classes</button>
+                <button class="btn-issue btn-custom">Import Class information</button>
+                <a th:href="@{|/admin/class-management/${class.id}/add-trainee|}">
+                    <button class="btn-issue btn-custom">Import trainee</button>
+                </a>
+                <button class="btn-issue btn-custom" data-toggle="modal" data-target="#issueModal">Add Class Issue
+                </button>
+            </div>
+
+
+            <div id="Student">
+
+                <div id="List_or_block">
+
+                    <i class="material-icons" id="View-list">list</i>
+                    <i class="material-icons" id="View-block">apps</i>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6" th:each="trainee: ${class.trainees}">
+                        <div class="card card-body">
+                            <div class="media">
+                                <div class="mr-3">
+                                    <a href="#">
+                                        <img src="http://placehold.it/150x150" class="rounded-circle" alt="">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="font-weight-bol h5">
+                                        <i class="fa fa-user"><a
+                                                th:href="'/admin/trainee/'+${trainee.id}"
+                                                th:text="${trainee.name}"></a></i>
+                                    </div>
+                                    <div class="font-weight-semibold">
+                                        <i class="fa fa-info-circle" aria-hidden="true"> Account: <span
+                                                th:text="${trainee.account}"></span></i>
+                                        </br>
+                                        <i class="fa fa-graduation-cap" aria-hidden="true"> Rank: <span
+                                                th:text="${trainee?.certificate?.rate}"></span></i>
+                                        </br>
+                                        <i class="fa fa-envelope" aria-hidden="true"> Email:
+                                            <span th:text="${trainee.email}"></span></i>
+                                        </br>
+                                        <i class="fa fa-university" aria-hidden="true"> University: <span
+                                                th:text="${trainee.university}"></span></i>
+
+                                    </div>
+                                    <a th:href="'/trainer/score?traineeId='+${trainee.id}" sec:authorize="hasAnyRole('ROLE_TRAINER')">
+                                        <button class="btn btn-success">Score</button>
+                                    </a>
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <span class="badge badge-mark bg-success border-success"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="issueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Issue class <span th:text="${class.name}"></span>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group is-focused form-create-issue" method="post"
+                              th:action="@{/admin/issue/createIssue}" th:object="${createIssueDto}">
+
+                            <div class="form-create-issue-content">
+
+                                <label class="bmd-label-floating">Issue tittle</label>
+                                <input type="text" class="form-control" th:field="*{title}"/>
+                                <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error"></label>
+                                <br/>
+                                <label class="bmd-label-floating">Issue content</label>
+                                <textarea type="text" class="form-control" th:field="*{content}"></textarea>
+
+                                <label th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+                                       class="error"></label>
+                                <input type="hidden" th:value="${class.id}" th:attr="name='classId'">
+
+                            </div>
+
+                            <button id="btn-create-issue" type="submit" class="btn btn-success" style="float: right">
+                                Create issue
+                            </button>
+
+                        </form>
+
+
+                        <div th:each="i: ${#numbers.sequence(class.issues.size()-1,0,-1)}"
+                             th:with="issue=${class.issues[i]}">
+                            <div class="issue">
+                                <strong>Issue <span th:utext="${issue.getTitle}"></span></strong>
+
+                            </div>
+                            <form class="issue-info form-update-issue" th:id="'issue'+${issue.id}" method="POST"
+                                  th:action="@{/admin/issue/updateIssue}" th:object="${updateIssueDto}">
+                                <div class="issue-info-detail">
+                                    <div class="form-issue-info">
+
+
+                                        <textarea readonly id="hi" class="issue-content form-control"
+                                                  th:text="${issue.content}" th:attr="name='content'"></textarea>
+                                        <label th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+                                               class="error"></label>
+                                        <input type="hidden" th:value="${issue.id}" th:attr="name='id'">
+                                        <input type="hidden" th:value="${class.id}" th:attr="name='classId'">
+
+                                    </div>
+                                    <button type="button" class="btn btn-danger btn-edit-issue-content"
+                                            style="float: right">Edit
+                                    </button>
+
+                                    <button type="submit" class="btn btn-danger btn-save-edit-issue-content"
+                                            style="float: right" value="Save"
+                                            th:attr="onclick=|submitForm('${issue.id}')|">Save
+                                    </button>
+
+
+                                    <button type="button" class="btn btn-danger btn-not-change-issue-content"
+                                            style="float: right">X
+                                    </button>
+                                    <a th:href="@{/admin/issue/deleteIssue(idDelete=${issue.id},classId=${class.id})}"
+                                       onclick="if (!(confirm('Are you sure you want to delete this content?'))) return false">
+                                        <button type="button" class="btn btn-danger btn-delete-issue"
+                                                style="float: right">Delete
+                                        </button>
+                                    </a>
+
+                                </div>
+
+                                <button type="button" data-toggle="modal"
+                                        th:data-target="'#solutionCreateModal'+${issue.id}"
+                                        class="btn btn-success btn-create-solution btn-custom" style="float: right">
+                                    Create solution
+                                </button>
+                            </form>
+
+                            <!--                            solution management-->
+
+                            <div class="all-solution" th:each="solution : ${issue.solutions}">
+                                <div class="solution">
+                                    <strong class="solution-tittle">Solution: <span
+                                            th:text="${solution.title}"></span></strong>
+                                    <form class="solution-info" th:id="'solution'+${solution.id}" method="POST"
+                                          th:action="@{/admin/solution/updateSolution}"
+                                          th:object="${updateSolutionDto}">
+                                        <div class="form-group is-focused form-solution-info">
+                                            <textarea readonly id="hi" class="issue-content form-control "
+                                                      th:text="${solution.content}" th:attr="name='content'"></textarea>
+                                            <label th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+                                                   class="error"></label>
+                                            <input type="hidden" th:value="${issue.id}" th:attr="name='id'">
+                                            <input type="hidden" th:value="${class.id}" th:attr="name='classId'">
+                                        </div>
+
+                                        <button type="button" class="btn btn-danger btn-edit-issue-content"
+                                                style="float: right">Edit
+                                        </button>
+
+                                        <button type="submit" class="btn btn-danger btn-save-edit-issue-content"
+                                                style="float: right" value="Save"
+                                                th:attr="onclick=|submitFormSolution('${solution.id}')|">Save
+                                        </button>
+
+
+                                        <button type="button" class="btn btn-danger btn-not-change-issue-content"
+                                                style="float: right">X
+                                        </button>
+                                        <a th:href="@{/admin/solution/deleteSolution(idDelete=${solution.id},classId=${class.id}, issueId=${issue.id})}"
+                                           onclick="if (!(confirm('Are you sure you want to delete this content?'))) return false">
+                                            <button type="button" class="btn btn-danger btn-delete-issue"
+                                                    style="float: right">Delete
+                                            </button>
+                                        </a>
+                                    </form>
+
+                                </div>
+
+                            </div>
+                            <br/>
+                            <!--                                modal create solution-->
+                            <div class="modal fade modalSolution" th:id="'solutionCreateModal'+${issue.id}"
+                                 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Create Solution for issue
+                                                <span th:text="${issue.title}"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-group is-focused form-create-solution" method="post"
+                                                  th:action="@{/admin/solution/createSolution}"
+                                                  th:object="${createSolutionDto}">
+
+                                                <div class="form-create-issue-content">
+
+                                                    <label class="bmd-label-floating">Solution tittle</label>
+                                                    <input type="text" class="form-control" th:field="*{title}"/>
+                                                    <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                                                           class="error"></label>
+                                                    <br/>
+                                                    <label class="bmd-label-floating">Solution content</label>
+                                                    <textarea type="text" class="form-control"
+                                                              th:field="*{content}"></textarea>
+
+                                                    <label th:if="${#fields.hasErrors('content')}"
+                                                           th:errors="*{content}" class="error"></label>
+                                                    <input type="hidden" th:value="${issue.id}"
+                                                           th:attr="name='issueId'">
+                                                    <input type="hidden" th:value="${class.id}"
+                                                           th:attr="name='classId'">
+
+                                                </div>
+
+                                                <button id="btn-create-solution" type="submit" class="btn btn-success"
+                                                        style="float: right">
+                                                    Create solution
+                                                </button>
+
+                                            </form>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer ">
+            <div class="container-fluid ">
+                <nav class="float-left ">
+                    <ul>
+
+                        <li>
+                            <a href=>
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Blog
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Licenses
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="copyright float-right ">
+                    &copy;
+                    <script>
+                        document.write(new Date().getFullYear())
+                    </script>
+                    , made with <i class="material-icons ">favorite</i> by
+                    <a href="https://www.creative-tim.com " target="_blank ">Creative </a> for a better web.
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<!--   Core JS Files   -->
+<script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+<script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+<script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+        crossorigin="anonymous "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+        crossorigin="anonymous "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $(".form-create-issue").validate({
+            rules: {
+                content: "required",
+                title: "required",
+            },
+
+            messages: {},
+            submitHandler: function (form) {
+                form.submit();
+            }
+
+        });
+
+
+        $('#Info_trainer li').on('click', function () {
+            $('#Info_trainer').find('li.Info_trainer_active').removeClass('Info_trainer_active');
+            $(this).addClass('Info_trainer_active');
+        });
+
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Class_nav ").addClass('active');
+        $(".issue").click(function () {
+            $(this).parent().find(".issue-info").toggle(500);
+
+
+            if ($(this).parent().find(".all-solution .solution-info").is(":hidden")) {
+
+                $(this).parent().find(".all-solution .solution-tittle").toggle(500);
+            } else {
+                $(this).parent().find(".all-solution .solution-tittle").toggle(500);
+                $(this).parent().find(".all-solution .solution-info").toggle(500);
+            }
+        })
+
+        $(".solution strong").click(function () {
+            $(this).parent().find(".solution-info").toggle(500);
+        });
+
+        $(".btn-edit-issue-content").click(function () {
+            $(this).parent().find(".btn-save-edit-issue-content").show();
+            $(this).parent().find(".btn-not-change-issue-content").show();
+            $(this).hide();
+            $(this).parent().find(".issue-content").removeAttr('readonly');
+            $(this).parent().find(".issue-content").focus();
+            $(this).parent().find(".btn-delete-issue").hide();
+        });
+
+        $(".btn-not-change-issue-content").click(function () {
+            $(this).parent().find(".btn-edit-issue-content").show();
+            $(this).hide();
+            $(this).parent().find(".btn-save-edit-issue-content").hide();
+            $(this).parent().find(".issue-content").attr('readonly', "");
+            $(this).parent().find(".btn-delete-issue").show();
+
+        });
+
+        $(".solution-info").hide();
+        $(".issue-info").hide();
+        $(".solution-tittle").hide();
+        $(".btn-save-edit-issue-content").hide();
+        $(".btn-not-change-issue-content").hide();
+
+
+        var showModal = getUrlParameter('showModal');
+        var isUpdate = getUrlParameter("updateIssue");
+        var isCreate = getUrlParameter("createIssue");
+        var idIssueUpdate = getUrlParameter("idIssue");
+        var isDelete = getUrlParameter("deleteIssue");
+        var updateSolution = getUrlParameter("updateSolution");
+        var idSolution = getUrlParameter("idSolution");
+        var deleteSolution = getUrlParameter("deleteSolution");
+        var createSolution = getUrlParameter("createSolution");
+
+        if (showModal == "true") {
+            if (isCreate == "true") {
+                alert("Create issue successful");
+            } else if (isUpdate == "true") {
+                alert("Update issue successful");
+                $("#issue" + idIssueUpdate).show();
+                $("#issue" + idIssueUpdate).parent().find("strong").show();
+
+            } else if (isDelete == "true") {
+                alert("Delete issue successful");
+            }
+            if (updateSolution == "true") {
+                alert("Update solution successful");
+                $("#issue" + idIssueUpdate).show();
+                $("#issue" + idIssueUpdate).parent().find("strong").show();
+                $("#solution" + idSolution).show();
+            }
+            if (deleteSolution == "true") {
+                alert("Delete solution successful");
+                $("#issue" + idIssueUpdate).show();
+                $("#issue" + idIssueUpdate).parent().find("strong").show();
+            }
+
+            if (createSolution == "true") {
+                alert("Create solution successful");
+                $("#issue" + idIssueUpdate).show();
+                $("#issue" + idIssueUpdate).parent().find("strong").show();
+            }
+            $('#issueModal').modal('show');
+        }
+
+
+    });
+
+    function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    function showAccount() {
+        document.getElementById("Content_info").innerText = document.getElementById("Trainer_account").innerText
+    }
+
+    function showPhone() {
+        document.getElementById("Content_info").innerText = document.getElementById("Trainer_phone").innerText;
+    }
+
+    function showEmail() {
+        document.getElementById("Content_info").innerText = document.getElementById("Trainer_email").innerText;
+    }
+
+    function submitForm(issueId) {
+
+        $("#issue" + issueId).validate({
+            rules: {
+                content: "required"
+            },
+
+            messages: {},
+            submitHandler: function (form) {
+                form.submit();
+            }
+
+        });
+
+    }
+
+    function submitFormSolution(solutionId) {
+        $("#solution" + solutionId).validate({
+            rules: {
+                content: "required"
+            },
+
+            messages: {},
+            submitHandler: function (form) {
+                form.submit();
+            }
+
+        });
+    }
+</script>
+
+</body>
+
+</html>

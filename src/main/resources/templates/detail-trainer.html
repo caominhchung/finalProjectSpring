@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>
+        Trainer Detail
+    </title>
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- CSS Files -->
+    <!--    <link href="../static/css/class_detail_ui/class_detail.css" rel="stylesheet" />-->
+    <link th:href="@{/css/class_detail_ui/class_detail.css}" rel="stylesheet"/>
+
+</head>
+
+<body class="">
+<div class="wrapper ">
+    <div th:insert="~{fragments :: slide_bar}"></div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <div th:replace="fragments :: navbar('Detail Trainer')">
+        </div>
+        <!-- End Navbar -->
+        <div class="content" id="content">
+            <div class="row equal d-flex justify-content-center">
+                <div class="col-lg-6 mb-4">
+                    <div class="footer-widget">
+                        <div class="card card-body">
+                            <div class="justify-content-center">
+                                <img src="http://placehold.it/150x150" class="rounded-circle mx-auto d-block" alt="">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center" th:text="${trainer.name}"></h4>
+                                <h4 class="card-title text-center" th:text="${trainer.telNumber}"></h4>
+                                <h4 class="card-title text-center" th:text="${trainer.email}"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item">
+                        <a class="" th:href="@{/admin/trainer/{trainerId}/feed-back(trainerId=${trainer.getId()})}">Feedback</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" data-toggle="pill" href="#attendance">Attendance</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" data-toggle="pill" href="#interview">Interview Result</a>-->
+<!--                    </li>-->
+                </ul>
+
+                <!-- Tab panes -->
+
+                <div class="tab-content">
+
+                    <div id="feedback" class="container tab-pane fade"><br>
+                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo consequat.</p>
+                    </div>
+
+<!--                    <div id="attendance" class="container tab-pane fade"><br>-->
+<!--                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque-->
+<!--                            laudantium, totam rem aperiam.</p>-->
+<!--                    </div>-->
+
+<!--                    <div id="interview" class="container tab-pane fade"><br>-->
+<!--                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque-->
+<!--                            laudantium, totam rem aperiam.</p>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+
+<!--   Core JS Files   -->
+<script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+<script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+<script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+        crossorigin="anonymous "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+        crossorigin="anonymous "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+        crossorigin="anonymous "></script>
+
+
+<script>
+    $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+    $("#Trainer_nav").addClass('active');
+</script>
+
+</body>
+
+</html>

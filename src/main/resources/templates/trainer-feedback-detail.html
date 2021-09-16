@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>
+    Trainer Feedback Detail
+  </title>
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- CSS Files -->
+  <!--    <link href="../static/css/class_detail_ui/class_detail.css" rel="stylesheet" />-->
+  <link th:href="@{/css/class_detail_ui/class_detail.css}" rel="stylesheet"/>
+
+</head>
+<body>
+<div class="wrapper">
+  <div th:replace="fragments :: slide_bar" />
+
+  <div class="main-panel">
+    <!--            navbar-->
+    <div th:replace="fragments :: navbar('Trainer FeedBack')">
+
+    </div>
+    <div class="content">
+      <div class="row equal d-flex justify-content-center">
+        <div class="col-lg-6 mb-4">
+          <div class="footer-widget">
+            <div class="card card-body">
+              <div class="justify-content-center">
+                <img src="http://placehold.it/150x150" class="rounded-circle mx-auto d-block" alt="">
+              </div>
+              <div class="card-body">
+                <h4 class="card-title text-center" th:text="${trainer.name}"></h4>
+                <h4 class="card-title text-center" th:text="${trainer.telNumber}"></h4>
+                <h4 class="card-title text-center" th:text="${trainer.email}"></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="list-feedback">
+        <h1 style="text-align: center" th:text="${course.name}"></h1>
+        <div class="row">
+          <table class="table table-bordered" style="background-color: whitesmoke">
+            <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Question</th>
+              <th scope="col">Answer/Evaluate(rated on a 5 scale)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="question, iter : ${questionFeedBackList}">
+              <td th:text="*{iter.count}"></td>
+              <td th:text="*{question.groupOfQuestion.getValue()}"></td>
+              <td th:text="*{question.content}"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Subject Detail
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div th:replace="fragments :: slide_bar">
+        </div>
+        <div class="main-panel">
+                <div th:replace="fragments :: navbar('Detail Subject')">
+
+                </div>
+                <div class="content">
+                    <p class="h3" style="color: orangered; text-align: center" th:text="${course.name}"></p>
+                    <a class="btn btn-primary" th:href="@{/admin/subject/{courseId}/list-training-objective/export(courseId=${course.getId()})}">Export to Excel</a>
+                    <a class="btn btn-success" th:href="@{/admin/subject/{courseId}/feed-back(courseId=${course.getId()})}">View Feedback</a>
+                    <div class="course-info">
+                        <p>
+                            <b>Duration: </b><span th:text="${course.duration}"></span> days
+                        </p>
+                        <p>
+                            <b>Lecture: </b><span th:text="${course.lecture}"></span>
+                        </p>
+                        <p>
+                            <b>Description: </b><span th:text="${course.description}"></span>
+                        </p>
+                    </div>
+                    <div class="trainee-list">
+                        <p class="h3">List Trainee</p>
+                        <div class="row" >
+                            <table class="table table-bordered" style="background-color: white">
+                                <thead>
+                                <tr style="text-align: center;">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Class Name</th>
+                                    <th scope="col">Note</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr style="text-align: center" th:each="trainingObj, iter : ${trainingObjList}">
+                                    <td th:text="*{iter.count}"></td>
+                                    <td th:text="*{trainingObj.trainee.name}"></td>
+                                    <td th:text="*{trainingObj.trainee.classOfTrainee.name}"></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments :: footer">
+
+            </div>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+
+
+    <script>
+
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Subject_nav").addClass('active');
+    </script>
+</body>
+</html>

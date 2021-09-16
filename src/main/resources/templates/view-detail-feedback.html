@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        View Detail Feedback
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div th:replace="fragments :: slide_bar"></div>
+        <div class="main-panel">
+            <div th:replace="fragments :: navbar('Subject Management')"></div>
+            <div class="content">
+                <div class="container-fluid">
+                    <h1>Hello</h1>
+                    <p>Trainee: <span th:text="${feedBack.trainingObjective.trainee.name}"></span></p>
+                    <p>Account: <span th:text="${feedBack.trainingObjective.trainee.account}"></span></p>
+                    <p>Class: <span th:text="${feedBack.trainingObjective.trainee.classOfTrainee.name}"></span></p>
+                    <p>Subject: <span th:text="${course.name}"></span></p>
+                    <p>Lecture: <span th:text="${course.lecture}"></span></p>
+                    <p>Score Feedback: <span th:text="${feedBack.feedBackScore}"></span></p>
+                    <p>Date Feedback: <span th:text="*{#dates.format(feedBack.consultDate, 'dd-MM-yyyy')}"></span></p>
+                    <div class="list-question-feedback">
+                        <div class="row">
+                            <table class="table table-bordered" style="background-color: whitesmoke">
+                                <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Question</th>
+                                    <th scope="col">Answer/Evaluate(rated on a 5 scale)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="question, iter : ${questionFeedBackList}">
+                                    <td th:text="*{iter.count}"></td>
+                                    <td th:text="*{question.groupOfQuestion.getValue()}"></td>
+                                    <td th:text="*{question.content}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:replace="fragments :: footer">
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+    <script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
+
+
+    <script>
+
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Subject_nav").addClass('active');
+    </script>
+</body>
+</html>

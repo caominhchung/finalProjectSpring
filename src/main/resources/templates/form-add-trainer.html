@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Add Trainer
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- CSS Files -->
+    <link th:href="@{/css/dashboard_ui/material-dashboard.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="fragments :: slide_bar">
+    </div>
+    <div class="main-panel">
+        <div th:replace="fragments :: navbar('Add Trainer')">
+
+        </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <form th:action="@{add-trainer}" method="post" id="form-add-trainer"
+                                      th:object="${trainerDto}">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">National</label>
+                                                <input th:field="*{national}" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Account</label>
+                                                <input th:field="*{account}" type="text" class="form-control">
+                                            </div>
+                                            <label class="error text-danger" th:if="${#fields.hasErrors('account')}"
+                                                   th:errors="*{account}"></label>
+                                            <label class="error text-danger" th:text="${errorAccount}"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Password</label>
+                                                <input th:field="*{password}" type="password" class="form-control">
+                                            </div>
+                                            <label class="error text-danger" th:if="${#fields.hasErrors('password')}"
+                                                   th:errors="*{password}"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Name</label>
+                                                <input th:field="*{name}" type="text" class="form-control">
+                                            </div>
+                                            <label class="error text-danger" th:if="${#fields.hasErrors('name')}"
+                                                   th:errors="*{name}"></label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Telephone</label>
+                                                <input th:field="*{telNumber}" type="number"
+                                                       class="form-control">
+                                                <label class="error text-danger" th:if="${#fields.hasErrors('telNumber')}"
+                                                       th:errors="*{telNumber}"></label>
+                                                <label class="error text-danger" th:text="${errorPhone}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Facebook</label>
+                                                <input th:field="*{facebook}" type="text" class="form-control">
+                                            </div>
+                                            <label class="error text-danger" th:if="${#fields.hasErrors('facebook')}"
+                                                   th:errors="*{facebook}"></label>
+                                            <label class="error text-danger" th:text="${errorFacebook}"></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Email</label>
+                                                <input th:field="*{email}" type="email"
+                                                       class="form-control">
+                                                <label class="error text-danger" th:if="${#fields.hasErrors('email')}"
+                                                       th:errors="*{email}"></label>
+                                                <label class="error text-danger" th:text="${errorEmail}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group is-focused">
+                                                <label class="bmd-label-floating">Gender</label>
+                                                <select class="custom-select" th:field="*{gender}">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+                                            <label th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+                                                   class="error text-danger"></label>
+                                        </div>
+                                    </div>
+
+                                    <input type="submit" class="btn btn-primary pull-right" value="Add Trainer"/>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="fragments :: footer">
+
+        </div>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script th:src="@{/js/dashboard_js/jquery.min.js}"></script>
+<script th:src="@{/js/dashboard_js/popper.min.js}"></script>
+<script th:src="@{/js/dashboard_js/chartjs.min.js}"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+        $("#Trainer_nav").addClass('active');
+
+        // $("#telNumber").rules("add", { regex: "\\d{10,15}" })
+        // $.validator.addMethod("ValidatePhone", function (value, element) {
+        //     let re = new RegExp("\\d{10,15}");
+        //     return this.optional(element) || re.test(value);
+        // }, "Phone must have 10-15 number");
+        //
+        // $.validator.addMethod("ValidateEmail", function (value, element) {
+        //     let re = new RegExp("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}");
+        //     return this.optional(element) || re.test(value);
+        // }, "Email must have right format");
+        //
+        // $("#form-add-trainee").validate({
+        //     rules: {
+        //         account: "required",
+        //         password: "required",
+        //         name: "required",
+        //         telNumber: {
+        //             required: true,
+        //             ValidatePhone: true
+        //         },
+        //         email: {
+        //             required: true,
+        //             ValidateEmail: true
+        //         }
+        //     },
+        //
+        //     messages: {},
+        //     submitHandler: function (form) {
+        //         form.submit();
+        //     }
+        //
+        // });
+    })
+</script>
+</body>
+</html>

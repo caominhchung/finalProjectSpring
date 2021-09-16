@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+<!--    <title>-->
+<!--        Trainee Detail-->
+<!--    </title>-->
+    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        Trainee Detail
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- CSS Files -->
+    <!--    <link href="../static/css/class_detail_ui/class_detail.css" rel="stylesheet" />-->
+    <link th:href="@{/css/class_detail_ui/class_detail.css}" rel="stylesheet"/>
+    <link th:href="@{/css/class_detail_ui/class_detail.css}" rel="stylesheet" />
+    <link th:href="@{/css/attendance.css}" rel="stylesheet" />
+    <script th:src="@{/js/attendance.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prevYear,prev,next,nextYear',
+                    center: 'title',
+                    right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                },
+                // initialDate: '2020-09-12',
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                dayMaxEvents: true, // allow "more" link when too many events
+                events: "http://localhost:8080/api/attendance/" + "[[${trainee.id}]]"
+            });
+      calendar.render();
+    });
+  </script>
+  <style>
+    body {
+      margin: 40px 10px;
+      padding: 0;
+      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    #calendar {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body class="">
+<div class="wrapper ">
+    <div th:insert="~{fragments :: slide_bar}"></div>
+    <div class="main-panel">
+        <!-- Navbar -->
+        <div th:replace="fragments :: navbar('Detail Trainee')">
+        </div>
+        <!-- End Navbar -->
+        <div class="content" id="content">
+            <div class="row equal">
+                <div class="col-lg-6 mb-4">
+                    <div class="footer-widget">
+                        <div class="card card-body">
+                            <div class="justify-content-center">
+                                <img src="http://placehold.it/150x150" class="rounded-circle mx-auto d-block" alt="">
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title text-center" th:text="${trainee.name}"></h4>
+                                <h4 class="card-title text-center" th:text="${trainee.telNumber}"></h4>
+                                <h4 class="card-title text-center" th:text="${trainee.email}"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="footer-widget">
+                        <div class="card card-body">
+                            <div class="text-center">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="card-title text-center">
+                                    A+
+                                </h2>
+                                <h4 class="card-title text-center">
+                                    Final grade: 98%
+                                    </br>
+                                    Attendance: 23/23
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#attendance"><strong>Attendance</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#comment"><strong>Comments</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#score"><strong>Score</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#interview"><strong>Interview Result</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#mistake"><strong>Mistakes</strong></a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+
+                    <div class="tab-content">
+                        <div id="attendance" class="container tab-pane active"><br>
+                            <!--            <h3>Number of attendance in September: 30</h3><br>-->
+                            <div id='calendar'></div>
+                        </div>
+                        <div id="comment" class="container tab-pane fade"><br>
+                            <div class="row d-flex justify-content-center" th:each="comment : ${commentList}">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-start">
+                                                <img class="rounded shadow-1-strong me-3 mr-3"
+                                                     src="http://placehold.it/150x150" alt="avatar" width="100"
+                                                     height="100"/>
+                                                <div class="w-100">
+                                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                                        <h6 class="text-primary mb-0 h5"
+                                                            th:text="${comment.trainer.name}">
+                                                            <!--                              HoaBT2-->
+                                                            <!-- <span class="text-dark ms-2">Hmm, This poster looks cool</span> -->
+                                                        </h6>
+                                                        <p class="mb-0" style="color: blue;"><strong>Date: <span
+                                                                th:text="${#dates.format(comment.dateComment, 'dd-MM-yyyy')}"></span></strong>
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="mb-0" th:text="${comment.content}">
+                                                            <!--                              The above example creates three equal-width columns on small, medium, large, and extra large devices using our predefined grid classes. Those columns are centered in the page with the parent .container.-->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<!--                        score-->
+                        <div id="score" class="container tab-pane fade"><br>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                                commodo consequat.</p>
+                        </div>
+<!--                        interview-->
+                        <div id="interview" class="container tab-pane fade"><br>
+                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                                laudantium, totam rem aperiam.</p>
+                        </div>
+<!--                        mistake-->
+                        <div id="mistake" class="container tab-pane fade"><br>
+                        <div class="card card-plain">
+                            <div class="card-body" style="background-color: #fff !important;">
+                                <div class="btn-action d-flex justify-content-end mr-4">
+                                    <a class="btn btn-success" sec:authorize="hasRole('ROLE_ADMIN')"
+                                       th:href="@{'/admin/trainee/' + ${trainee.id} + '/mistake'}">Manage</a>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <th>No</th>
+                                        <th>Name </th>
+                                        <th>Content</th>
+                                        <th>Note</th>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="mistake, iter : ${mistakeList}">
+                                            <td th:text="*{iter.count}"></td>
+                                            <td th:text="*{mistake.name}"></td>
+                                            <td th:text="*{mistake.content}"></td>
+                                            <td th:text="*{mistake.note}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Modal -->
+
+<!--   Core JS Files   -->
+<script th:src="@{/js/dashboard_js/jquery.min.js} "></script>
+<script th:src="@{/js/dashboard_js/popper.min.js} "></script>
+<script th:src="@{/js/dashboard_js/chartjs.min.js} "></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+        crossorigin="anonymous "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+        crossorigin="anonymous "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+        crossorigin="anonymous "></script>
+
+
+<script>
+    $('.sidebar-wrapper ul').find('li.active').removeClass('active');
+    $("#Trainee_nav").addClass('active');
+</script>
+
+</body>
+</html>
+
+</html>

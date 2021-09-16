@@ -1,0 +1,39 @@
+body {
+    background-color:  rgb(232, 242, 244);
+}
+.container {
+    background-color: white;
+}
+div.header {
+    margin-top: 50px;
+    padding: 50px;
+    background-color: rgb(3, 120, 124);
+    color: aliceblue;
+}
+
+div.content {
+    padding: 50px;
+}
+span.important {
+    color: red;
+}
+
+div.form-group {
+    margin-top: 50px;
+}
+
+p {
+    font-size: 14px;
+}
+p.index {
+    font-size: 18px;
+}
+input[type=radio] {
+    margin: 0px 12px 0px 5px;
+}
+
+input[type=submit] {
+    background-color: rgb(3, 120, 124);
+    color: aliceblue;
+    padding: 5px 100px
+}
